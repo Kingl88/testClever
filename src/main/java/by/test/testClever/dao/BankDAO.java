@@ -1,7 +1,7 @@
-package dao;
+package by.test.testClever.dao;
 
-import dao.interfacies.DAO;
-import entities.Bank;
+import by.test.testClever.dao.interfacies.DAO;
+import by.test.testClever.entities.Bank;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,12 +18,12 @@ public class BankDAO implements DAO<Bank> {
     }
 
     @Override
-    public void save(Bank bank) {
-
+    public Long save(Bank bank) {
+return null;
     }
 
     @Override
-    public void update(Bank bank, String[] params) {
+    public void update(Bank bank) {
 
     }
 

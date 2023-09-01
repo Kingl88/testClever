@@ -32,10 +32,10 @@ CREATE TABLE accounts
 CREATE TABLE transactions
 (
     id              bigserial primary key,
-    type            varchar(15),
-    status          varchar(15),
+    type            varchar(15)                      NOT NULL,
+    currency_type   varchar(10)                      NOT NULL,
     from_account_id integer references accounts (id),
-    to_account_id   integer references accounts (id),
+    to_account_id   integer references accounts (id) NOT NULL,
     count           numeric(8, 2),
     created_at      timestamp default current_timestamp,
     update_at       timestamp default current_timestamp
@@ -43,6 +43,6 @@ CREATE TABLE transactions
 
 CREATE TABLE banks_users
 (
-    bank_id integer references banks (id),
-    user_id integer references users (id)
+    bank_id bigserial references banks (id),
+    user_id bigserial references users (id)
 );

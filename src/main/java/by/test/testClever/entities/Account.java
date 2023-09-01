@@ -1,4 +1,4 @@
-package entities;
+package by.test.testClever.entities;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -12,6 +12,6 @@ public class Account extends BaseEntity{
     private String number;
     private String currencyType;
     private BigDecimal balance;
-    private Bank bank;
-    private User user;
+    private Long bankId;
+    private Long userId;
 }

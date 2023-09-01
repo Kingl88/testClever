@@ -1,4 +1,4 @@
-package dao.interfacies;
+package by.test.testClever.dao.interfacies;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -9,9 +9,9 @@ public interface DAO <T>{
 
     List<T> getAll() throws SQLException;
 
-    void save(T t);
+    Long save(T t) throws SQLException;
 
-    void update(T t, String[] params);
+    void update(T t);
 
     void delete(T t);
 }
