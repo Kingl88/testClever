@@ -13,4 +13,8 @@ public class Bank extends BaseEntity{
     private Long id;
     private String name;
     private List<User> users;
+
+    public Bank(Long id) {
+        this.id = id;
+    }
 }

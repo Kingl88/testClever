@@ -25,6 +25,7 @@ dependencies {
     tomcat ("org.apache.tomcat.embed:tomcat-embed-logging-juli:9.0.0.M6")
     tomcat ("org.apache.tomcat.embed:tomcat-embed-jasper:9.0.73")
     implementation("com.zaxxer:HikariCP:5.0.1")
+    implementation("org.apache.pdfbox:pdfbox:3.0.0")
 }
 tomcat {
     httpProtocol = "org.apache.coyote.http11.Http11Nio2Protocol"
