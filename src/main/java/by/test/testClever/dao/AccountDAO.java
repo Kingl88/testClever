@@ -2,6 +2,8 @@ package by.test.testClever.dao;
 
 import by.test.testClever.dao.interfacies.DAO;
 import by.test.testClever.entities.Account;
+import by.test.testClever.entities.Bank;
+import by.test.testClever.entities.User;
 import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
@@ -13,8 +15,8 @@ import java.util.Optional;
 
 public class AccountDAO extends AbstractDao implements DAO<Account> {
     private static final AccountDAO INSTANCE = new AccountDAO();
-    private final String updateBalanceAccount = "UPDATE accounts SET balance = ? WHERE id = ?";
-    private final String getAccountById = "SELECT * from accounts WHERE id = ?";
+    private final String UPDATE_BALANCE_ACCOUNT = "UPDATE accounts SET balance = ? WHERE id = ?";
+    private final String GET_ACCOUNT_BY_ID = "SELECT * from accounts WHERE id = ?";
 
     private AccountDAO() {
         super(LoggerFactory.getLogger(AccountDAO.class));
@@ -29,18 +31,18 @@ public class AccountDAO extends AbstractDao implements DAO<Account> {
         ResultSet resultSet;
         Account newAccount = new Account();
         try (Connection connection = getConnection()) {
-            PreparedStatement preparedStatement = connection.prepareStatement(getAccountById);
+            PreparedStatement preparedStatement = connection.prepareStatement(GET_ACCOUNT_BY_ID);
             preparedStatement.setLong(1, id);
             preparedStatement.execute();
-           resultSet = preparedStatement.getResultSet();
-           resultSet.next();
-           newAccount.setId(resultSet.getLong("id"));
-           newAccount.setNumberIBAN(resultSet.getString("number_iban"));
-           newAccount.setNumber(resultSet.getString("number"));
-           newAccount.setBankId(resultSet.getLong("bank_id"));
-           newAccount.setUserId(resultSet.getLong("user_id"));
-           newAccount.setBalance(resultSet.getBigDecimal("balance"));
-           newAccount.setCurrencyType(resultSet.getString("currency_type"));
+            resultSet = preparedStatement.getResultSet();
+            resultSet.next();
+            newAccount.setId(resultSet.getLong("id"));
+            newAccount.setNumberIBAN(resultSet.getString("number_iban"));
+            newAccount.setNumber(resultSet.getString("number"));
+            newAccount.setBank(new Bank(resultSet.getLong("bank_id")));
+            newAccount.setUser(new User(resultSet.getLong("user_id")));
+            newAccount.setBalance(resultSet.getBigDecimal("balance"));
+            newAccount.setCurrencyType(resultSet.getString("currency_type"));
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -61,7 +63,7 @@ public class AccountDAO extends AbstractDao implements DAO<Account> {
     @Override
     public void update(Account account) {
         try (Connection connection = getConnection()) {
-            PreparedStatement preparedStatement = connection.prepareStatement(updateBalanceAccount);
+            PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_BALANCE_ACCOUNT);
             preparedStatement.setBigDecimal(1, account.getBalance());
             preparedStatement.setLong(2, account.getId());
             preparedStatement.executeUpdate();

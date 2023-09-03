@@ -13,7 +13,10 @@ public class TransactionService {
     private final AccountDAO accountDAO = AccountDAO.getInstance();
     private final TransactionDAO transactionDAO = TransactionDAO.getInstance();
 
-    public Long accountReplenishmentTransaction(long id, String type, String currencyType, long toId, long fromId, BigDecimal count) {
+    public Optional<Transaction> getTransactionById(Long id){
+        return transactionDAO.get(id);
+    }
+    public Long accountReplenishmentTransaction(String type, String currencyType, long toId, long fromId, BigDecimal count) {
         Account to = null;
         Long result = null;
         if (toId == fromId) {
@@ -34,8 +37,5 @@ public class TransactionService {
             }
         }
         return result;
-    }
-    public Long transferBetweenBanks (long id, String type, String currencyType, long toId, long fromId, BigDecimal count) {
-    return null;
     }
 }
